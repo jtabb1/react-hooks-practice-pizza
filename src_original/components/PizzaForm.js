@@ -1,51 +1,19 @@
 import React from "react";
 
-function PizzaForm({ pizza, onChangeForm, onEditPizza }) {
-  function handleInputChange(event) {
-    onChangeForm(event.target.name, event.target.value);
-  }
-
-  function handleRadioChange(event) {
-    onChangeForm(event.target.name, event.target.value === "Vegetarian");
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    fetch(`http://localhost:3001/pizzas/${pizza.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(pizza),
-    })
-      .then((r) => r.json())
-      .then(onEditPizza);
-  }
-
-  if (!pizza) return null;
-
-  const { topping, size, vegetarian } = pizza;
-
+function PizzaForm() {
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={null /*handle that submit*/}>
       <div className="form-row">
         <div className="col-5">
           <input
-            type="text"
             className="form-control"
-            placeholder="Pizza Topping"
+            type="text"
             name="topping"
-            value={topping}
-            onChange={handleInputChange}
+            placeholder="Pizza Topping"
           />
         </div>
         <div className="col">
-          <select
-            name="size"
-            value={size}
-            onChange={handleInputChange}
-            className="form-control"
-          >
+          <select className="form-control" name="size">
             <option value="Small">Small</option>
             <option value="Medium">Medium</option>
             <option value="Large">Large</option>
@@ -58,8 +26,6 @@ function PizzaForm({ pizza, onChangeForm, onEditPizza }) {
               type="radio"
               name="vegetarian"
               value="Vegetarian"
-              checked={vegetarian}
-              onChange={handleRadioChange}
             />
             <label className="form-check-label">Vegetarian</label>
           </div>
@@ -69,8 +35,6 @@ function PizzaForm({ pizza, onChangeForm, onEditPizza }) {
               type="radio"
               name="vegetarian"
               value="Not Vegetarian"
-              checked={!vegetarian}
-              onChange={handleRadioChange}
             />
             <label className="form-check-label">Not Vegetarian</label>
           </div>
